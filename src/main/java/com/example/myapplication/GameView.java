@@ -58,9 +58,9 @@ public class GameView extends View {
         w = b.getWidth();
         h = b.getHeight();
 
-        firstFrame = new Rect(4*w, 0, 5*w, h);
 
-        po = new Sprite(2000, 250, -300, 0, firstFrame, b);
+
+       po = new Sprite(2000, 250, -300, 0, firstFrame, b);
 
         Timer t = new Timer();
         t.start();
@@ -92,24 +92,20 @@ public class GameView extends View {
             points--;
         }
 
-
-        if (enemyBird.getX()+enemyBird.getFrameWidth() < playerBird.getX() ) {
-            teleportEnemy();
+        if (enemyBird.getX() < - enemyBird.getFrameWidth()) {
+            teleportOblako ();
             points += 5;
         }
-
 
         if (enemyBird.intersect(playerBird)) {
             teleportOblako ();
             points -= 20;
         }
 
-
-        if (po.getX()+po.getFrameWidth() < playerBird.getX()) {
-            teleportOblako ();
+        if (po.getX() < - po.getFrameWidth()) {
+            teleportEnemy ();
             points += 5;
         }
-
 
         if (po.intersect(playerBird)) {
             teleportEnemy ();
@@ -160,6 +156,7 @@ public class GameView extends View {
         int eventAction = event.getAction();
 
         if (eventAction == MotionEvent.ACTION_DOWN)  {
+            // Движение вверх
             if (event.getY() < playerBird.getBoundingBoxRect().top) {
                 playerBird.setVy(-100);
                 points--;
@@ -173,12 +170,12 @@ public class GameView extends View {
     }
 
     private void teleportEnemy () {
-        enemyBird.setX(viewWidth);
+        enemyBird.setX(viewWidth + Math.random() * 500);
         enemyBird.setY(Math.random() * (viewHeight - enemyBird.getFrameHeight()));
     }
 
     private void teleportOblako () {
-        po.setX(viewWidth);
+        po.setX(viewWidth + Math.random() * 400);
         po.setY(Math.random() * (viewHeight - po.getFrameHeight()));
     }
 
