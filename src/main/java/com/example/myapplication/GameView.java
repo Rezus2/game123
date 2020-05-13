@@ -93,12 +93,12 @@ public class GameView extends View {
         }
 
         if (enemyBird.getX() < - enemyBird.getFrameWidth()) {
-            teleportOblako ();
+            teleportPo();
             points += 5;
         }
 
         if (enemyBird.intersect(playerBird)) {
-            teleportOblako ();
+            teleportPo();
             points -= 20;
         }
 
@@ -174,7 +174,7 @@ public class GameView extends View {
         enemyBird.setY(Math.random() * (viewHeight - enemyBird.getFrameHeight()));
     }
 
-    private void teleportOblako () {
+    private void teleportPo () {
         po.setX(viewWidth + Math.random() * 400);
         po.setY(Math.random() * (viewHeight - po.getFrameHeight()));
     }
