@@ -43,6 +43,16 @@ public class Sprite {
         this.padding = 20;
     }
 
+    public Sprite(double x, double y, double velocityX, double velocityY, Bitmap bitmap){
+
+        this.x = x;
+        this.y = y;
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+        this.bitmap = bitmap;
+    }
+
+
     public void setX(double x) {
         this.x = x;
     }

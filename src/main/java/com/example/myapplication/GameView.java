@@ -17,14 +17,14 @@ public class GameView extends View {
     private int viewHeight;
     private int points = 3;
     private Sprite playerBird;
-    private Sprite oblako;
+    private Sprite po;
     private Sprite enemyBird;
     private final int timerInterval = 30;
 
     public GameView(Context context) {
 
         super(context);
-        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.samik1234);
+        Bitmap b = BitmapFactory.decodeResource(getResources(), R.drawable.samm);
 
         int w = b.getWidth();
         int h = b.getHeight();
@@ -34,7 +34,7 @@ public class GameView extends View {
         playerBird = new Sprite(10, 0, 0, 100, firstFrame, b);
 
 
-        b = BitmapFactory.decodeResource(getResources(), R.drawable.ptici123);
+        b = BitmapFactory.decodeResource(getResources(), R.drawable.ptc);
         w = b.getWidth()/5;
         h = b.getHeight()/3;
 
@@ -54,13 +54,13 @@ public class GameView extends View {
             }
         }
 
-        b = BitmapFactory.decodeResource(getResources(), R.drawable.oblo4ko);
+        b = BitmapFactory.decodeResource(getResources(), R.drawable.po);
         w = b.getWidth();
         h = b.getHeight();
 
         firstFrame = new Rect(4*w, 0, 5*w, h);
 
-        oblako = new Sprite(2000, 250, -300, 0, firstFrame, b);
+        po = new Sprite(2000, 250, -300, 0, firstFrame, b);
 
         Timer t = new Timer();
         t.start();
@@ -77,7 +77,7 @@ public class GameView extends View {
 
     protected void update() {
         playerBird.update(timerInterval);
-        oblako.update(timerInterval);
+        po.update(timerInterval);
         enemyBird.update(timerInterval);
 
 
@@ -92,22 +92,26 @@ public class GameView extends View {
             points--;
         }
 
-        if (enemyBird.getX() < - enemyBird.getFrameWidth()) {
-            teleportOblako ();
+
+        if (enemyBird.getX()+enemyBird.getFrameWidth() < playerBird.getX() ) {
+            teleportEnemy();
             points += 5;
         }
+
 
         if (enemyBird.intersect(playerBird)) {
             teleportOblako ();
             points -= 20;
         }
 
-        if (oblako.getX() < - oblako.getFrameWidth()) {
-            teleportEnemy ();
+
+        if (po.getX()+po.getFrameWidth() < playerBird.getX()) {
+            teleportOblako ();
             points += 5;
         }
 
-        if (oblako.intersect(playerBird)) {
+
+        if (po.intersect(playerBird)) {
             teleportEnemy ();
             points -= 20;
         }
@@ -142,7 +146,7 @@ public class GameView extends View {
         canvas.drawARGB(250, 127, 199, 255); // заливаем цветом
         playerBird.draw(canvas);
         enemyBird.draw(canvas);
-        oblako.draw(canvas);
+        po.draw(canvas);
         Paint p = new Paint();
         p.setAntiAlias(true);
         p.setTextSize(55.0f);
@@ -156,7 +160,6 @@ public class GameView extends View {
         int eventAction = event.getAction();
 
         if (eventAction == MotionEvent.ACTION_DOWN)  {
-            // Движение вверх
             if (event.getY() < playerBird.getBoundingBoxRect().top) {
                 playerBird.setVy(-100);
                 points--;
@@ -170,13 +173,13 @@ public class GameView extends View {
     }
 
     private void teleportEnemy () {
-        enemyBird.setX(viewWidth + Math.random() * 500);
+        enemyBird.setX(viewWidth);
         enemyBird.setY(Math.random() * (viewHeight - enemyBird.getFrameHeight()));
     }
 
     private void teleportOblako () {
-        oblako.setX(viewWidth + Math.random() * 400);
-        oblako.setY(Math.random() * (viewHeight - oblako.getFrameHeight()));
+        po.setX(viewWidth);
+        po.setY(Math.random() * (viewHeight - po.getFrameHeight()));
     }
 
 }
